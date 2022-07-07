@@ -1,14 +1,16 @@
 from flask import Flask, render_template, url_for, request, redirect
-from flask_sqlalchemy import SQLAlchemy
+import sqlalchemy
 import sqlite3
 from datetime import datetime
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+
+app = Flask(__name__)
+
+@app.route('/')
+def null_page():
+    return render_template("about.html")
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    #db.create_all()
+    app.run(debug=True)
