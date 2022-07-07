@@ -1,9 +1,29 @@
 from flask import Flask, render_template, url_for, request, redirect
-import sqlalchemy
+from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 from datetime import datetime
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///book_pasta.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+
+class Pasta(db.Model):
+    __tablename__ = 'pasta'
+    current_date = datetime.now()
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    intro = db.Column(db.String(300), nullable=False)
+    text = db.Column(db.Text, nullable=False)
+    date = db.Column(db.DateTime, default=current_date)
+
+    def __init__(self, title, intro, text):
+        self.title = title.strip()
+        self.intro = intro.strip()
+        self.text = text.strip()
+
+
 
 @app.route('/')
 def null_page():
@@ -12,5 +32,5 @@ def null_page():
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    #db.create_all()
+    db.create_all()
     app.run(debug=True)
