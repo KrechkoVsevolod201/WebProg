@@ -24,9 +24,44 @@ class Pasta(db.Model):
         self.text = text.strip()
 
 
-
 @app.route('/')
 def null_page():
+    return render_template("about.html")
+
+
+@app.route('/home')
+def home():
+    q = request.args.get('q')
+
+    if q:
+        articles = Pasta.query.filter(Pasta.title.contains(q) | Pasta.intro.contains(q) | Pasta.text.contains(q)).all()
+    else:
+        articles = Pasta.query.order_by(Pasta.date.desc()).all()
+    return render_template("home.html", articles=articles)
+
+
+@app.route('/admin')
+def password_menu():
+    password = request.args.get('password')
+    pas = "1234"
+    if password == pas:
+        return redirect('/admin/home')
+    return render_template("admin-pass.html")
+
+
+@app.route('/admin/home')
+def home_admin():
+    q = request.args.get('q')
+
+    if q:
+        articles = Pasta.query.filter(Pasta.title.contains(q) | Pasta.intro.contains(q) | Pasta.text.contains(q)).all()
+    else:
+        articles = Pasta.query.order_by(Pasta.date.desc()).all()
+    return render_template("home-admin.html", articles=articles)
+
+
+@app.route('/about')
+def about():
     return render_template("about.html")
 
 
