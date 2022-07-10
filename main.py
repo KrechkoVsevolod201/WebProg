@@ -9,19 +9,21 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
-class Pasta(db.Model):
+class Book(db.Model):
     __tablename__ = 'pasta'
     current_date = datetime.now()
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    intro = db.Column(db.String(300), nullable=False)
+    book_name = db.Column(db.String(100), nullable=False)
+    author_name = db.Column(db.String(300), nullable=False)
     text = db.Column(db.Text, nullable=False)
-    date = db.Column(db.DateTime, default=current_date)
+    date = db.Column(db.DateTime, nullable=False)
+    comment_rate = db.Column(db.Integer, nullable=False)
 
-    def __init__(self, title, intro, text):
-        self.title = title.strip()
-        self.intro = intro.strip()
+    def __init__(self, book_name, author_name, text, comment_rate):
+        self.book_name = book_name.strip()
+        self.author_name = author_name.strip()
         self.text = text.strip()
+        self.comment_rate = comment_rate.strip()
 
 
 @app.route('/')
@@ -31,13 +33,12 @@ def null_page():
 
 @app.route('/home')
 def home():
-    q = request.args.get('q')
+    return render_template("home.html")
 
-    if q:
-        articles = Pasta.query.filter(Pasta.title.contains(q) | Pasta.intro.contains(q) | Pasta.text.contains(q)).all()
-    else:
-        articles = Pasta.query.order_by(Pasta.date.desc()).all()
-    return render_template("home.html", articles=articles)
+@app.route('/posts')
+def posts():
+    book = Book.query.first()
+    return render_template('posts.html')
 
 
 @app.route('/admin')
@@ -52,12 +53,7 @@ def password_menu():
 @app.route('/admin/home')
 def home_admin():
     q = request.args.get('q')
-
-    if q:
-        articles = Pasta.query.filter(Pasta.title.contains(q) | Pasta.intro.contains(q) | Pasta.text.contains(q)).all()
-    else:
-        articles = Pasta.query.order_by(Pasta.date.desc()).all()
-    return render_template("home-admin.html", articles=articles)
+    return render_template("home-admin.html")
 
 
 @app.route('/about')
