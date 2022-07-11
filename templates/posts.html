@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Все книги
+{% endblock %}
+
+{% block body %}
+<div>
+  <h1>Все книги на сайте</h1>
+  {{ book[1].book_name, book[1].author_name }}
+</div>
+{% endblock %}

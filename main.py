@@ -16,7 +16,7 @@ class Book(db.Model):
     book_name = db.Column(db.String(100), nullable=False)
     author_name = db.Column(db.String(300), nullable=False)
     text = db.Column(db.Text, nullable=False)
-    date = db.Column(db.DateTime, nullable=False)
+    date = db.Column(db.Text, nullable=True)
     comment_rate = db.Column(db.Integer, nullable=False)
 
     def __init__(self, book_name, author_name, text, comment_rate):
@@ -35,10 +35,11 @@ def null_page():
 def home():
     return render_template("home.html")
 
+
 @app.route('/posts')
 def posts():
-    book = Book.query.first()
-    return render_template('posts.html')
+    book = Book.query.all()
+    return render_template('posts.html', book=book)
 
 
 @app.route('/admin')
