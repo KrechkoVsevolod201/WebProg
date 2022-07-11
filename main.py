@@ -4,20 +4,20 @@ import sqlite3
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///book_pasta.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///book.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
 class Book(db.Model):
-    __tablename__ = 'pasta'
+    __tablename__ = 'book'
     current_date = datetime.now()
     id = db.Column(db.Integer, primary_key=True)
-    book_name = db.Column(db.String(100), nullable=False)
-    author_name = db.Column(db.String(300), nullable=False)
-    text = db.Column(db.Text, nullable=False)
+    book_name = db.Column(db.String(100), nullable=True)
+    author_name = db.Column(db.String(300), nullable=True)
+    text = db.Column(db.Text, nullable=True)
     date = db.Column(db.Text, nullable=True)
-    comment_rate = db.Column(db.Integer, nullable=False)
+    comment_rate = db.Column(db.Integer, nullable=True)
 
     def __init__(self, book_name, author_name, text, comment_rate):
         self.book_name = book_name.strip()
@@ -60,6 +60,24 @@ def home_admin():
 @app.route('/about')
 def about():
     return render_template("about.html")
+
+
+@app.route('/create_pasta', methods=['POST', 'GET'])
+def create_pasta():
+    if request.method == "POST":
+        book_name = request.form['book_name']
+        author_name = request.form['author_name']
+        text = request.form['text']
+        comment_rate = request.form['comment_rate']
+        comment = Book(book_name=book_name, author_name=author_name, text=text, comment_rate=comment_rate)
+        try:
+            db.session.add(comment)
+            db.session.commit()
+            return redirect('/home')
+        except:
+            return "При создании поста произошла ошибка"
+    else:
+        return render_template("create-comment.html")
 
 
 # Press the green button in the gutter to run the script.
