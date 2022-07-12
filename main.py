@@ -119,6 +119,42 @@ def home_admin_rev():
     return render_template("home-admin.html", book=book)
 
 
+@app.route('/admin/post-detail/<int:id>/del')
+def post_delete(id):
+    book = Book.query.get_or_404(id)
+    try:
+        db.session.delete(book)
+        db.session.commit()
+        return redirect('/admin/home')
+
+    except:
+        return "При удалении пасты произошла ошибка"
+
+
+@app.route('/admin/post-detail/<int:id>/update', methods=['POST', 'GET'])
+def post_update(id):
+    book = Book.query.get(id)
+    if request.method == "POST":
+        book.book_name = request.form['book_name']
+        book.author_name = request.form['author_name']
+        book.text = request.form['text']
+        book.comment_rate = request.form['comment_rate']
+
+        try:
+            db.session.commit()
+            return redirect('/admin/home')
+        except:
+            return "При редактировании пасты произошла ошибка"
+    else:
+        return render_template("post-update.html", book=book)
+
+
+@app.route('/admin/post-detail/<int:id>')
+def admin_detail(id):
+    bookk = Book.query.get(id)
+    return render_template("admin-post-detail.html", bookk=bookk)
+
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     db.create_all()

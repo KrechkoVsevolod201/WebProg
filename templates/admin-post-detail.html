@@ -13,7 +13,8 @@
             <p>{{ bookk.text }}</p>
 
             <p></p>
-            <a href="/posts/{{ bookk.id }}/update" type="submit" class="btn btn-success" >Редактировать</a>
+           <a href="/admin/post-detail/{{ bookk.id }}/update" type="submit" class="btn btn-success" >Редактировать</a>
+            <a href="/admin/post-detail/{{ bookk.id }}/del" type="submit" class="btn btn-danger" >Удалить</a>
         </div>
     </div>
 {% endblock %}
