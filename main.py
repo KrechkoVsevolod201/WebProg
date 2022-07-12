@@ -13,7 +13,7 @@ class Book(db.Model):
     __tablename__ = 'book'
     current_date = datetime.now()
     id = db.Column(db.Integer, primary_key=True)
-    book_name = db.Column(db.String(100), nullable=True)
+    book_name = db.Column(db.String(1000), nullable=True)
     author_name = db.Column(db.String(300), nullable=True)
     text = db.Column(db.Text, nullable=True)
     date = db.Column(db.Text, nullable=True)
