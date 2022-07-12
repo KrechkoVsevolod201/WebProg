@@ -8,12 +8,14 @@
 <div class="container mt-5">
     <h1>Все посты</h1>
     <a class="btn btn-info" href="/home">В алфавитном порядке ⇅</a>
-    <a class="btn btn-info" href="/home_old">В обратном порядке ⇅</a>
+    <a class="btn btn-info" href="/home_rev">В обратном порядке ⇅</a>
     <p></p>
         {% for book in book %}
     <div class="alert alert-info">
-        <h2>{{ book.book_name }}</h2>
-        <h2>{{ book.author_name }}</h2>
+        <h1>{{ book.book_name }}</h1>
+        <h3>{{ book.author_name }}</h3>
+        <h4>Оценка книги: {{ book.comment_rate }}</h4>
+        <p></p>
         <a href="/home/detail/{{ book.id }}" class="btn btn-warning">Детальнее</a>
     </div>
     {% endfor %}

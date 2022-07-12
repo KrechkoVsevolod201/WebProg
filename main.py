@@ -42,6 +42,17 @@ def home():
     return render_template("home.html", book=book)
 
 
+@app.route('/home_rev')
+def home_rev():
+    q = request.args.get('q')
+
+    if q:
+        book = Book.query.filter(Book.book_name.contains(q) | Book.author_name.contains(q) | Book.text.contains(q)).all()
+    else:
+        book = Book.query.order_by(Book.book_name.desc()).all()
+    return render_template("home.html", book=book)
+
+
 @app.route('/home/detail/<int:id>')
 def detail(id):
     bookk = Book.query.get(id)
@@ -61,12 +72,6 @@ def password_menu():
     if password == pas:
         return redirect('/admin/home')
     return render_template("admin-pass.html")
-
-
-@app.route('/admin/home')
-def home_admin():
-    q = request.args.get('q')
-    return render_template("home-admin.html")
 
 
 @app.route('/about')
@@ -90,6 +95,28 @@ def create_pasta():
             return "При создании поста произошла ошибка"
     else:
         return render_template("create-comment.html")
+
+
+@app.route('/admin/home')
+def home_admin():
+    q = request.args.get('q')
+
+    if q:
+        book = Book.query.filter(Book.book_name.contains(q) | Book.author_name.contains(q) | Book.text.contains(q)).all()
+    else:
+        book = Book.query.order_by(Book.book_name.asc()).all()
+    return render_template("home-admin.html", book=book)
+
+
+@app.route('/admin/home_rev')
+def home_admin_rev():
+    q = request.args.get('q')
+
+    if q:
+        book = Book.query.filter(Book.book_name.contains(q) | Book.author_name.contains(q) | Book.text.contains(q)).all()
+    else:
+        book = Book.query.order_by(Book.book_name.desc()).all()
+    return render_template("home-admin.html", book=book)
 
 
 # Press the green button in the gutter to run the script.
