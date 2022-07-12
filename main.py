@@ -33,7 +33,8 @@ def null_page():
 
 @app.route('/home')
 def home():
-    return render_template("home.html")
+    book = Book.query.all()
+    return render_template("home.html", book=book)
 
 
 @app.route('/posts')
@@ -62,7 +63,7 @@ def about():
     return render_template("about.html")
 
 
-@app.route('/create_pasta', methods=['POST', 'GET'])
+@app.route('/create_post', methods=['POST', 'GET'])
 def create_pasta():
     if request.method == "POST":
         book_name = request.form['book_name']

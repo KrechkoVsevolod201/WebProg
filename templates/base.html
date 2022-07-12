@@ -20,13 +20,14 @@
       <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
           <p></p><form class="navbar-form nav" method="GET">
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Search" name="q" value="{{ request.args.get('q', '') }}">
+            <input type="text" class="form-control" placeholder="Поиск" name="q" value="{{ request.args.get('q', '') }}">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Поиск</button>
     </form>
           <a class="btn btn-danger" href="/admin">Войти как администратор</a>
-        <a class="btn btn-info" href="/home">Home</a>
-        <a class="btn btn-info" href="/about">About</a>
+        <a class="btn btn-info" href="/home">Домой</a>
+        <a class="btn btn-info" href="/about">О нас</a>
+          <a class="btn btn-warning" href="/create_post">Создать отзыв</a>
 
       </nav>
     </div>
