@@ -7,9 +7,11 @@
 {% block body %}
     <div class="container mt-5">
         <h1>{{ bookk.book_name }}</h1>
-
+        <p>Автор книги: {{bookk.author_name}}</p>
         <div class="alert alert-info">
+            Отзыв о книге:
             <p>{{ bookk.text }}</p>
+
             <p></p>
             <a href="/posts/{{ bookk.id }}/update" type="submit" class="btn btn-success" >Редактировать</a>
         </div>

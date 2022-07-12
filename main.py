@@ -33,7 +33,12 @@ def null_page():
 
 @app.route('/home')
 def home():
-    book = Book.query.order_by(Book.book_name.asc()).all()
+    q = request.args.get('q')
+
+    if q:
+        book = Book.query.filter(Book.book_name.contains(q) | Book.author_name.contains(q) | Book.text.contains(q)).all()
+    else:
+        book = Book.query.order_by(Book.book_name.asc()).all()
     return render_template("home.html", book=book)
 
 
