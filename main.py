@@ -2,6 +2,8 @@ from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 from datetime import datetime
+import os
+import flask
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///book.db'
@@ -153,6 +155,11 @@ def post_update(id):
 def admin_detail(id):
     bookk = Book.query.get(id)
     return render_template("admin-post-detail.html", bookk=bookk)
+
+
+@app.route("/file")
+def index():
+    return flask.send_from_directory(os.getcwd(), 'file/video1.webm')
 
 
 # Press the green button in the gutter to run the script.
