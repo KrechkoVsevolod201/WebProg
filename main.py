@@ -33,13 +33,19 @@ def null_page():
 
 @app.route('/home')
 def home():
-    book = Book.query.all()
+    book = Book.query.order_by(Book.book_name.asc()).all()
     return render_template("home.html", book=book)
+
+
+@app.route('/home/detail/<int:id>')
+def detail(id):
+    bookk = Book.query.get(id)
+    return render_template("post-detail.html", bookk=bookk)
 
 
 @app.route('/posts')
 def posts():
-    book = Book.query.all()
+    book = Book.query.get(id)
     return render_template('posts.html', book=book)
 
 

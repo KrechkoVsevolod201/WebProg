@@ -7,13 +7,14 @@
 {% block body %}
 <div class="container mt-5">
     <h1>Все посты</h1>
-    <a class="btn btn-info" href="/home">Сначала новые ⇅</a>
-    <a class="btn btn-info" href="/home_old">Сначала старые ⇅</a>
+    <a class="btn btn-info" href="/home">В алфавитном порядке ⇅</a>
+    <a class="btn btn-info" href="/home_old">В обратном порядке ⇅</a>
     <p></p>
         {% for book in book %}
     <div class="alert alert-info">
         <h2>{{ book.book_name }}</h2>
-        <a href="/posts/{{ book.id }}" class="btn btn-warning">Детальнее</a>
+        <h2>{{ book.author_name }}</h2>
+        <a href="/home/detail/{{ book.id }}" class="btn btn-warning">Детальнее</a>
     </div>
     {% endfor %}
 </div>
